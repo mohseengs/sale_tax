@@ -2,12 +2,15 @@ require_relative "Exempt_product.rb"
 require_relative "Imported_product.rb"
 require_relative "Product.rb"
 require_relative "Tax.rb" 
+require_relative "Reciept.rb" 
+
 class Shop < Tax
 
     def initialize
         @imported_products = Hash.new
         @products = Hash.new
         @exempt_product = Hash.new
+        @reciept = Reciept.new
         show_menu
     end    
 
@@ -172,7 +175,7 @@ class Shop < Tax
                 product_name = gets.chomp
                 
                 puts "how many you want"
-                stock = gets.chomp
+                stock = gets.chomp.to_i
 
                 if (@products[product_name].stock < stock)
                     puts "stocks out!!!"
@@ -182,15 +185,15 @@ class Shop < Tax
 
                 end
                 @products[product_name].stock -= stock
-                product[@products[product_name]] = stock
+                products[@products[product_name]] = stock
 
-                products.push(product)
-                @products[products.name].stock - stock
                 puts "want to add more"
-                want_to_add gets.chomp
+                want_to_add = gets.chomp
             end
          
-            Reciept.new(@products)
+            @reciept.create(products)
+            @reciept.process
+            @reciept.show
 
             
 
