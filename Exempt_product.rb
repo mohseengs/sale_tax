@@ -1,8 +1,8 @@
 require_relative "Product.rb"
 
-class Imported_product < Product
-    @@tax  = 15;
-    def Imported_product(name, price)
-        super(name,price)
+class Exempt_product < Product
+    def initialize(name, price,stocks)
+        super(name,price,stocks)
+        @tax = 0
     end
 end

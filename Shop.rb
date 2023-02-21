@@ -9,7 +9,7 @@ class Shop < Tax
     def initialize
         @imported_products = Hash.new
         @products = Hash.new
-        @exempt_product = Hash.new
+        @exempt_products = Hash.new
         @reciept = Reciept.new
         show_menu
     end    
@@ -19,11 +19,11 @@ class Shop < Tax
     end
 
     def add_imported_product(name, price)
-        imported_products[name] = Exempt_product.new(name,price)
+        imported_products[name] = Imported_product.new(name,price)
     end
 
     def add_product(name, price)
-        products[name] = Exempt_product.new(name,price)
+        products[name] = Product.new(name,price)
     end
 
     def show_menu
@@ -71,8 +71,6 @@ class Shop < Tax
 
         show_menu
     end
-
-
     
     def add_items
         system("clear")
@@ -90,7 +88,7 @@ class Shop < Tax
             puts "choose option : "
             puts "1 : Normal product"
             puts "2 : Imported product"
-            puts "2 : Exempt product"
+            puts "3 : Exempt product"
     
             type = gets.chomp.to_i
             
@@ -115,8 +113,6 @@ class Shop < Tax
     
     end
 
-
-
     def show_customer_options
 
         p "welcome"
@@ -139,7 +135,6 @@ class Shop < Tax
         end
         show_menu
     end
-
 
     def show_products(products)
 
@@ -173,27 +168,38 @@ class Shop < Tax
             while(want_to_add == "Y" || want_to_add == "y")
                 puts "select product to buy"
                 product_name = gets.chomp
-                
+
+                if(@products.include?(product_name))
                 puts "how many you want"
                 stock = gets.chomp.to_i
 
-                if (@products[product_name].stock < stock)
-                    puts "stocks out!!!"
-                    puts "want to add more? Y/N"
-                    want_to_add gets.chomp
-                    next
+                    if (@products[product_name].stock < stock)
+                        puts "stocks out!!!"
+                        puts "want to add more? Y/N"
+                        want_to_add gets.chomp
+                        next
 
-                end
+                    end
                 @products[product_name].stock -= stock
                 products[@products[product_name]] = stock
 
                 puts "want to add more"
                 want_to_add = gets.chomp
+
+                else
+
+                    puts "product is not available!"
+                    puts "-------------------------"
+                    puts "want try again? Y/N"
+                    want_to_add = gets.chomp
+          
+                end
             end
          
             @reciept.create(products)
             @reciept.process
             @reciept.show
+   
 
             
 

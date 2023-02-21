@@ -3,8 +3,9 @@ class Tax
     protected 
 
     def self.get_tax_ammount(tax_p, price)
-        p = tax_p / 100.0
-        puts p
+
+        puts "% #{tax_p} , price #{price}"
+        p = tax_p.to_i / 100.0
         return price * p
     end
     
@@ -13,3 +14,5 @@ class Tax
     end
     
 end
+
+p Tax.get_tax_ammount(10,100)
