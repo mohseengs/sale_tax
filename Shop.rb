@@ -27,10 +27,17 @@ class Shop < Tax
     end
 
     def show_menu
-        p "welcome"
-        p "1 : if you are owener"
-        p "2 : if you are customer"
-        p "quit"
+        system("clear")
+        puts "welcome"
+        puts "++++++++++++++++++++++++"
+        puts puts
+        puts "1 : if you are owener"
+        puts "2 : if you are customer"
+        puts "0 : quit"
+        puts puts puts
+        puts "enter your choice..."
+
+
 
        
         input = -1
@@ -41,7 +48,7 @@ class Shop < Tax
         
             when 1 then show_owner_options
             when 2 then show_customer_options
-            when 0 then break
+            when 0 then input = 0
 
             end
         
@@ -50,12 +57,14 @@ class Shop < Tax
     end
 
     def show_owner_options
-
-        p "welcome"
-        p "1 : add items"
-        p "2 : remove items"
-        p "3 : view items"
-        p "go back"
+        system("clear")
+        puts "welcome owner"
+        puts "+++++++++++++++++++++++++++"
+        puts puts puts
+        puts "1 : add items"
+        puts "2 : remove items"
+        puts "3 : view items"
+        puts "go back"
 
        
         input = -1
@@ -74,6 +83,9 @@ class Shop < Tax
     
     def add_items
         system("clear")
+        puts "add new products!"
+        puts "+++++++++++++++++++++++++++"
+        puts puts
         input = 1
         while(input == 1)
             puts "enter product name"
@@ -84,7 +96,9 @@ class Shop < Tax
     
             puts "enter stocks"
             stocks = gets.chomp.to_i
-    
+            system("clear")
+            puts "select product category!"
+            puts puts puts
             puts "choose option : "
             puts "1 : Normal product"
             puts "2 : Imported product"
@@ -114,11 +128,13 @@ class Shop < Tax
     end
 
     def show_customer_options
-
-        p "welcome"
-        p "1 : buy items"
-        p "2 : print reciept"
-        p "go back"
+        system("clear")
+        puts "welcome costomer : "
+        puts "+++++++++++++++++++++++++++"
+        puts puts
+        puts"1 : buy items"
+        puts"2 : print reciept"
+        puts"0 : go back"
 
        
         input = -1
@@ -147,21 +163,29 @@ class Shop < Tax
     end
 
     def buy_items
+        
         products = Hash.new
         system("clear")
         input = 1
+
+        puts "items available..."
+        puts puts puts
         while(input == 1)
-            system("clear")
 
             if(@imported_products.size > 0)
                 show_products(@imported_products)
-            elsif(@products.size > 0)
+            end
+
+            if(@products.size > 0)
                 show_products(@products)
-            elsif(exempt_products.size > 0)
+            end
+
+            if(@exempt_products.size > 0)
                 show_products(@exempt_products)
-            else 
-                puts "no items to show"
-                
+            end
+
+            if(@exempt_products.size == 0 && @products.size == 0 && @imported_products.size == 0)
+                puts "no items to show" 
             end
             
             want_to_add = "Y"
@@ -170,7 +194,8 @@ class Shop < Tax
                 product_name = gets.chomp
 
                 if(@products.include?(product_name))
-                puts "how many you want"
+                puts "select quantity how many you want"
+                puts
                 stock = gets.chomp.to_i
 
                     if (@products[product_name].stock < stock)

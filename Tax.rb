@@ -4,7 +4,6 @@ class Tax
 
     def self.get_tax_ammount(tax_p, price)
 
-        puts "% #{tax_p} , price #{price}"
         p = tax_p.to_i / 100.0
         return price * p
     end
